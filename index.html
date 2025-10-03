@@ -168,22 +168,24 @@
     document.getElementById("nickname-input").style.display = "block";
   }
 
-// 닉네임 입력 후 문제 시작
-function beginQuestions() {
-  let nickname = document.getElementById("nickname").value.trim();
-  if (!nickname) {
-    alert("닉네임을 입력해주세요!");
-    return;
+  // 닉네임 입력 후 문제 시작
+  function beginQuestions() {
+    let nickname = document.getElementById("nickname").value.trim();
+    if (!nickname) {
+      alert("닉네임을 입력해주세요!");
+      return;
+    }
+
+    userNickname = nickname; // ⭐ 닉네임 저장
+
+    document.getElementById("nickname-input").style.display = "none";
+    document.getElementById("quiz").style.display = "block";
+
+    currentQuestion = 0;
+    for (let key in scores) scores[key] = 0;
+
+    showQuestion();  
   }
-
-  document.getElementById("nickname-input").style.display = "none";
-  document.getElementById("quiz").style.display = "block";
-
-  currentQuestion = 0;
-  for (let key in scores) scores[key] = 0;
-
-  showQuestion();  
-}
 
     
     const questions = [
