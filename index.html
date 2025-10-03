@@ -232,30 +232,7 @@ function showQuestion() {
   quizDiv.appendChild(questionElem);
 }
 
-// 결과 보여주기
-function showResult() {
-  const resultDiv = document.getElementById("result");
-  const shareDiv = document.getElementById("share-buttons");
-  document.getElementById("quiz").style.display = "none";
-
-  let topType = null;
-  let maxScore = -1;
-
-  for (let key in scores) {
-    if (scores[key] > maxScore) {
-      maxScore = scores[key];
-      topType = key;
-    }
-  }
-  
-resultDiv.innerHTML = `
-  <b>${userNickname}</b>님은<br>
-  <b>${topType.toUpperCase()}</b> 타입의 스타시드입니다!<br><br>
-  ${typeDescriptions[topType]}<br><br>
-  <span style="font-size: 0.9em; color: #ddd;">결과는 스크린샷을 찍어 공유해 주세요 ^^</span>
-`;
-
-  
+// 타입별 설명을 함수 바깥에 미리 선언
 const typeDescriptions = {
   orion: `🟥 <b>오리온 (Orion)</b><br>
           🔥 강인한 추진력과 전사적 에너지를 지닌 리더입니다.<br>
@@ -328,19 +305,37 @@ const typeDescriptions = {
            불완전함마저도 자신만의 세계로 끌어당깁니다.`
 };
 
+// 결과 보여주기 함수
+function showResult() {
+  const resultDiv = document.getElementById("result");
+  const shareDiv = document.getElementById("share-buttons");
+  document.getElementById("quiz").style.display = "none";
 
+  let topType = null;
+  let maxScore = -1;
 
+  for (let key in scores) {
+    if (scores[key] > maxScore) {
+      maxScore = scores[key];
+      topType = key;
+    }
+  }
 
-  
   resultDiv.innerHTML = `
     <b>${userNickname}</b>님은<br>
     <b>${topType.toUpperCase()}</b> 타입의 스타시드입니다!<br><br>
+    ${typeDescriptions[topType]}<br><br>
     <span style="font-size: 0.9em; color: #ddd;">결과는 스크린샷을 찍어 공유해 주세요 ^^</span>
   `;
 
   shareDiv.style.display = "block";
 }
 
+
+
+
+
+  
 // 다시하기 버튼 기능
 function restartQuiz() {
   location.reload();
