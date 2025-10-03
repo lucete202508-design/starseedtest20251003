@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Starseed Origin Test</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
 <style>
   body {
@@ -122,8 +122,8 @@
   }
 </style>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
-
 
 
 
@@ -153,12 +153,14 @@
     <!-- 결과 -->
     <div id="result"></div>
 
-    <!-- 다시하기 / 공유하기 -->
-    <div id="share-buttons" style="margin-top:20px; display:none;">
-      <button class="action-btn" onclick="restartQuiz()">🔁 다시하기</button>
-      <button class="action-btn" onclick="shareResult()">🌌 내 스타시드 공유하기</button>
-    </div>
-  </div>
+ <!-- 다시하기 / 내결과저장 / 공유하기 -->
+<div id="share-buttons" style="margin-top:20px; display:none;">
+  <button class="action-btn" onclick="restartQuiz()">🔁 다시하기</button>
+  <button class="action-btn" onclick="saveResult()">💾 내 결과 저장</button>
+  <button class="action-btn" onclick="shareResult()">🌌 공유하기</button>
+</div>
+
+ 
 </body>
 
 
@@ -201,347 +203,191 @@
     showQuestion();  
   }
 
-    
-    const questions = [
-      { text: "1. 별빛 가득한 밤하늘을 올려다볼 때 나는…",
-        options: [
-          { text: "끝없는 어둠 앞에서 두려움과 경외심을 느낀다", type: "orion" },
-          { text: "미지의 세계가 나를 부른다고 느낀다", type: "andromeda" },
-          { text: "설명할 수 없는 향수를 느끼며 고향 같다고 직감한다", type: "pleiades" },
-          { text: "별들의 움직임 속에서 지혜를 읽어낸다", type: "sirius" },
-          { text: "빛 속에서 무한한 가능성을 본다", type: "vega" }
-        ]
-      },
-      { text: "2. 낯선 땅에 처음 발을 디딘 순간 나는…",
-        options: [
-          { text: "살아남을 방법부터 찾는다", type: "draco" },
-          { text: "새로운 풍경을 탐험하며 설렌다", type: "procyon" },
-          { text: "낯설지 않고 친숙하게 느낀다", type: "lyra" },
-          { text: "이 공간의 의미와 역사를 분석한다", type: "arcturus" },
-          { text: "규칙 없이 자유롭게 나아간다", type: "maldek" }
-        ]
-      },
-      { text: "3. 사람들이 나에게 자주 하는 말은…",
-        options: [
-          { text: "넌 강한 추진력과 리더십이 있어", type: "orion" },
-          { text: "넌 항상 새로운 걸 시도해, 독창적이야", type: "andromeda" },
-          { text: "넌 따뜻해서 곁에 있으면 편안해", type: "pleiades" },
-          { text: "넌 차분하고 지혜로워", type: "sirius" },
-          { text: "넌 어디에도 묶이지 않는 자유로운 영혼이야", type: "vega" }
-        ]
-      },
-      { text: "4. 인생의 중요한 갈림길에서 나는…",
-        options: [
-          { text: "위험이 닥쳐와도 돌파한다", type: "orion" },
-          { text: "남들이 가지 않은 길을 개척한다", type: "andromeda" },
-          { text: "누군가의 상처를 치유할 수 있는 길을 택한다", type: "pleiades" },
-          { text: "지혜와 깨달음으로 나아간다", type: "sirius" },
-          { text: "한곳에 머무르지 않고 자유롭게 떠난다", type: "vega" }
-        ]
-      },
-      { text: "5. 내가 가장 편안함을 느끼는 공간은…",
-        options: [
-          { text: "도전과 경쟁이 있는 무대", type: "orion" },
-          { text: "창작과 예술이 가득한 작업실", type: "vega" },
-          { text: "자연 속 고요한 숲", type: "pleiades" },
-          { text: "책과 지혜가 가득한 서재", type: "sirius" },
-          { text: "끝없는 여행길", type: "andromeda" }
-        ]
-      },
-      { text: "6. 어릴 적 자주 꾸던 꿈은…",
-        options: [
-          { text: "전쟁과 생존을 위한 싸움", type: "orion" },
-          { text: "낯선 별과 도시, 미지의 공간", type: "andromeda" },
-          { text: "빛과 자연, 동물들과 교감", type: "pleiades" },
-          { text: "고대 문명과 스승을 만나는 꿈", type: "sirius" },
-          { text: "하늘을 나는 자유로운 나 자신", type: "vega" }
-        ]
-      },
-      { text: "7. 내가 가장 중요하게 생각하는 가치는…",
-        options: [
-          { text: "힘과 성취", type: "orion" },
-          { text: "창조와 혁신", type: "andromeda" },
-          { text: "사랑과 조화", type: "pleiades" },
-          { text: "지식과 탐구", type: "sirius" },
-          { text: "자유와 독립", type: "vega" }
-        ]
-      },
-      { text: "8. 갈등 상황에서 나는…",
-        options: [
-          { text: "정면 돌파한다", type: "orion" },
-          { text: "새로운 해결책을 제시한다", type: "andromeda" },
-          { text: "평화롭게 조율한다", type: "pleiades" },
-          { text: "근본 원인을 분석한다", type: "sirius" },
-          { text: "모두를 떠나 자유를 택한다", type: "vega" }
-        ]
-      },
-      { text: "9. 누군가 나에게 고민을 털어놓을 때 나는…",
-        options: [
-          { text: "강하게 밀어붙이며 해결책을 준다", type: "orion" },
-          { text: "창의적인 방법을 함께 찾는다", type: "andromeda" },
-          { text: "마음을 어루만지며 위로한다", type: "pleiades" },
-          { text: "논리적인 조언을 전한다", type: "sirius" },
-          { text: "자유롭게 두며 존중한다", type: "vega" }
-        ]
-      },
-      { text: "10. 내가 세상을 바라보는 시선은…",
-        options: [
-          { text: "끝없는 전장, 도전의 무대", type: "orion" },
-          { text: "새로운 실험과 창조의 놀이터", type: "andromeda" },
-          { text: "모두가 치유될 수 있는 하나의 가족", type: "pleiades" },
-          { text: "탐구와 깨달음의 도서관", type: "sirius" },
-          { text: "끝없는 여행지", type: "vega" }
-        ]
-      },
-      { text: "11. 내가 가장 자주 끌리는 원소는…",
-        options: [
-          { text: "불(火) – 열정과 힘", type: "orion" },
-          { text: "공기(風) – 자유와 변화", type: "andromeda" },
-          { text: "물(水) – 치유와 감정", type: "pleiades" },
-          { text: "흙(土) – 지혜와 안정", type: "sirius" },
-          { text: "빛(光) – 창조와 영감", type: "vega" }
-        ]
-      },
-      { text: "12. 시간을 넘나들 수 있다면 나는…",
-        options: [
-          { text: "개척과 전쟁의 시대", type: "orion" },
-          { text: "아무도 모르는 미래", type: "andromeda" },
-          { text: "평화와 치유의 시절", type: "pleiades" },
-          { text: "고대 문명과 지혜의 시대", type: "sirius" },
-          { text: "시간을 초월한 자유의 세계", type: "vega" }
-        ]
-      },
-      { text: "13. 내게 힘을 주는 음악은…",
-        options: [
-          { text: "강렬한 박자와 에너지", type: "orion" },
-          { text: "실험적이고 독창적 리듬", type: "andromeda" },
-          { text: "부드럽고 치유적인 선율", type: "pleiades" },
-          { text: "명상과 집중을 돕는 음악", type: "sirius" },
-          { text: "자유로운 즉흥 연주", type: "vega" }
-        ]
-      },
-      { text: "14. 내가 사람들과 있을 때 두드러지는 모습은…",
-        options: [
-          { text: "리더로서 방향을 제시한다", type: "orion" },
-          { text: "아이디어로 분위기를 바꾼다", type: "andromeda" },
-          { text: "모두를 편안하게 만든다", type: "pleiades" },
-          { text: "지혜로운 조언을 전한다", type: "sirius" },
-          { text: "묶이지 않고 자유롭게 흘러다닌다", type: "vega" }
-        ]
-      },
-      { text: "15. 타인의 아픔을 보았을 때 나는…",
-        options: [
-          { text: "강해져야 한다고 말한다", type: "orion" },
-          { text: "새로운 해결책을 제안한다", type: "andromeda" },
-          { text: "함께 울고 웃으며 위로한다", type: "pleiades" },
-          { text: "문제의 본질을 분석해준다", type: "sirius" },
-          { text: "네 여정은 네 것이라며 존중한다", type: "vega" }
-        ]
-      },
-      { text: "16. 내가 삶에서 반복적으로 마주치는 패턴은…",
-        options: [
-          { text: "도전과 경쟁", type: "orion" },
-          { text: "떠돌이와 탐험", type: "andromeda" },
-          { text: "사람을 만나고 치유함", type: "pleiades" },
-          { text: "지식을 배우려는 열망", type: "sirius" },
-          { text: "떠남과 귀환, 자유로움", type: "vega" }
-        ]
-      },
-      { text: "17. 내가 끌리는 상징은…",
-        options: [
-          { text: "불꽃과 검", type: "orion" },
-          { text: "나침반과 별 지도", type: "andromeda" },
-          { text: "연꽃과 물결", type: "pleiades" },
-          { text: "책과 빛나는 눈", type: "sirius" },
-          { text: "날개와 자유로운 새", type: "vega" }
-        ]
-      },
-      { text: "18. 우주를 떠올릴 때 나는…",
-        options: [
-          { text: "정복해야 할 무대", type: "orion" },
-          { text: "무한한 가능성과 실험의 장", type: "andromeda" },
-          { text: "영원한 고향", type: "pleiades" },
-          { text: "비밀을 담은 서", type: "sirius" },
-          { text: "끝없는 여행길", type: "vega" }
-        ]
-      },
-      { text: "19. 내 영혼의 빛깔은…",
-        options: [
-          { text: "붉은색 – 열정과 힘", type: "orion" },
-          { text: "파란색 – 자유와 흐름", type: "andromeda" },
-          { text: "초록색 – 치유와 조화", type: "pleiades" },
-          { text: "보라색 – 지혜와 직관", type: "sirius" },
-          { text: "황금색 – 창조와 확장", type: "vega" }
-        ]
-      },
-      { text: "20. 나는 결국 어떤 존재로 기억되고 싶은가?",
-        options: [
-          { text: "개척의 전사", type: "orion" },
-          { text: "새로운 가능성을 연 창조자", type: "andromeda" },
-          { text: "사랑과 치유의 전달자", type: "pleiades" },
-          { text: "지혜와 깨달음을 나누는 현자", type: "sirius" },
-          { text: "어디에도 묶이지 않는 자유로운 영혼", type: "vega" }
-        ]
-      }
-    ];
+const questions = [
+  { text: "1. 별빛 가득한 밤하늘을 올려다볼 때 나는…",
+    options: [
+      { text: "끝없는 어둠 앞에서 두려움과 경외심을 느낀다", type: "orion" },
+      { text: "미지의 세계가 나를 부른다고 느낀다", type: "andromeda" },
+      { text: "설명할 수 없는 향수를 느끼며 고향 같다고 직감한다", type: "pleiades" },
+      { text: "별들의 움직임 속에서 지혜를 읽어낸다", type: "sirius" },
+      { text: "빛 속에서 무한한 가능성을 본다", type: "vega" }
+    ]
+  },
+  { text: "2. 낯선 땅에 처음 발을 디딘 순간 나는…",
+    options: [
+      { text: "살아남을 방법부터 찾는다", type: "draco" },
+      { text: "새로운 풍경을 탐험하며 설렌다", type: "procyon" },
+      { text: "낯설지 않고 친숙하게 느낀다", type: "lyra" },
+      { text: "이 공간의 의미와 역사를 분석한다", type: "arcturus" },
+      { text: "규칙 없이 자유롭게 나아간다", type: "maldek" }
+    ]
+  },
+  { text: "3. 사람들이 나에게 자주 하는 말은…",
+    options: [
+      { text: "넌 강한 추진력과 리더십이 있어", type: "orion" },
+      { text: "넌 항상 새로운 걸 시도해, 독창적이야", type: "andromeda" },
+      { text: "넌 따뜻해서 곁에 있으면 편안해", type: "pleiades" },
+      { text: "넌 차분하고 지혜로워", type: "sirius" },
+      { text: "넌 어디에도 묶이지 않는 자유로운 영혼이야", type: "vega" }
+    ]
+  },
+  { text: "4. 인생의 중요한 갈림길에서 나는…",
+    options: [
+      { text: "위험이 닥쳐와도 돌파한다", type: "orion" },
+      { text: "남들이 가지 않은 길을 개척한다", type: "andromeda" },
+      { text: "누군가의 상처를 치유할 수 있는 길을 택한다", type: "pleiades" },
+      { text: "지혜와 깨달음으로 나아간다", type: "sirius" },
+      { text: "한곳에 머무르지 않고 자유롭게 떠난다", type: "vega" }
+    ]
+  },
+  { text: "5. 내가 가장 편안함을 느끼는 공간은…",
+    options: [
+      { text: "도전과 경쟁이 있는 무대", type: "orion" },
+      { text: "창작과 예술이 가득한 작업실", type: "vega" },
+      { text: "자연 속 고요한 숲", type: "pleiades" },
+      { text: "책과 지혜가 가득한 서재", type: "sirius" },
+      { text: "끝없는 여행길", type: "andromeda" }
+    ]
+  },
+  { text: "6. 어릴 적 자주 꾸던 꿈은…",
+    options: [
+      { text: "전쟁과 생존을 위한 싸움", type: "orion" },
+      { text: "낯선 별과 도시, 미지의 공간", type: "andromeda" },
+      { text: "빛과 자연, 동물들과 교감", type: "pleiades" },
+      { text: "고대 문명과 스승을 만나는 꿈", type: "sirius" },
+      { text: "하늘을 나는 자유로운 나 자신", type: "vega" }
+    ]
+  },
+  { text: "7. 내가 가장 중요하게 생각하는 가치는…",
+    options: [
+      { text: "힘과 성취", type: "orion" },
+      { text: "창조와 혁신", type: "andromeda" },
+      { text: "사랑과 조화", type: "pleiades" },
+      { text: "지식과 탐구", type: "sirius" },
+      { text: "자유와 독립", type: "vega" }
+    ]
+  },
+  { text: "8. 갈등 상황에서 나는…",
+    options: [
+      { text: "정면 돌파한다", type: "orion" },
+      { text: "새로운 해결책을 제시한다", type: "andromeda" },
+      { text: "평화롭게 조율한다", type: "pleiades" },
+      { text: "근본 원인을 분석한다", type: "sirius" },
+      { text: "모두를 떠나 자유를 택한다", type: "vega" }
+    ]
+  },
+  { text: "9. 누군가 나에게 고민을 털어놓을 때 나는…",
+    options: [
+      { text: "강하게 밀어붙이며 해결책을 준다", type: "orion" },
+      { text: "창의적인 방법을 함께 찾는다", type: "andromeda" },
+      { text: "마음을 어루만지며 위로한다", type: "pleiades" },
+      { text: "논리적인 조언을 전한다", type: "sirius" },
+      { text: "자유롭게 두며 존중한다", type: "vega" }
+    ]
+  },
+  { text: "10. 내가 세상을 바라보는 시선은…",
+    options: [
+      { text: "끝없는 전장, 도전의 무대", type: "orion" },
+      { text: "새로운 실험과 창조의 놀이터", type: "andromeda" },
+      { text: "모두가 치유될 수 있는 하나의 가족", type: "pleiades" },
+      { text: "탐구와 깨달음의 도서관", type: "sirius" },
+      { text: "끝없는 여행지", type: "vega" }
+    ]
+  },
+  { text: "11. 내가 가장 자주 끌리는 원소는…",
+    options: [
+      { text: "불(火) – 열정과 힘", type: "orion" },
+      { text: "공기(風) – 자유와 변화", type: "andromeda" },
+      { text: "물(水) – 치유와 감정", type: "pleiades" },
+      { text: "흙(土) – 지혜와 안정", type: "sirius" },
+      { text: "빛(光) – 창조와 영감", type: "vega" }
+    ]
+  },
+  { text: "12. 시간을 넘나들 수 있다면 나는…",
+    options: [
+      { text: "개척과 전쟁의 시대", type: "orion" },
+      { text: "아무도 모르는 미래", type: "andromeda" },
+      { text: "평화와 치유의 시절", type: "pleiades" },
+      { text: "고대 문명과 지혜의 시대", type: "sirius" },
+      { text: "시간을 초월한 자유의 세계", type: "vega" }
+    ]
+  },
+  { text: "13. 내게 힘을 주는 음악은…",
+    options: [
+      { text: "강렬한 박자와 에너지", type: "orion" },
+      { text: "실험적이고 독창적 리듬", type: "andromeda" },
+      { text: "부드럽고 치유적인 선율", type: "pleiades" },
+      { text: "명상과 집중을 돕는 음악", type: "sirius" },
+      { text: "자유로운 즉흥 연주", type: "vega" }
+    ]
+  },
+  { text: "14. 내가 사람들과 있을 때 두드러지는 모습은…",
+    options: [
+      { text: "리더로서 방향을 제시한다", type: "orion" },
+      { text: "아이디어로 분위기를 바꾼다", type: "andromeda" },
+      { text: "모두를 편안하게 만든다", type: "pleiades" },
+      { text: "지혜로운 조언을 전한다", type: "sirius" },
+      { text: "묶이지 않고 자유롭게 흘러다닌다", type: "vega" }
+    ]
+  },
+  { text: "15. 타인의 아픔을 보았을 때 나는…",
+    options: [
+      { text: "강해져야 한다고 말한다", type: "orion" },
+      { text: "새로운 해결책을 제안한다", type: "andromeda" },
+      { text: "함께 울고 웃으며 위로한다", type: "pleiades" },
+      { text: "문제의 본질을 분석해준다", type: "sirius" },
+      { text: "네 여정은 네 것이라며 존중한다", type: "vega" }
+    ]
+  },
+  { text: "16. 내가 삶에서 반복적으로 마주치는 패턴은…",
+    options: [
+      { text: "도전과 경쟁", type: "orion" },
+      { text: "떠돌이와 탐험", type: "andromeda" },
+      { text: "사람을 만나고 치유함", type: "pleiades" },
+      { text: "지식을 배우려는 열망", type: "sirius" },
+      { text: "떠남과 귀환, 자유로움", type: "vega" }
+    ]
+  },
+  { text: "17. 내가 끌리는 상징은…",
+    options: [
+      { text: "불꽃과 검", type: "orion" },
+      { text: "나침반과 별 지도", type: "andromeda" },
+      { text: "연꽃과 물결", type: "pleiades" },
+      { text: "책과 빛나는 눈", type: "sirius" },
+      { text: "날개와 자유로운 새", type: "vega" }
+    ]
+  },
+  { text: "18. 우주를 떠올릴 때 나는…",
+    options: [
+      { text: "정복해야 할 무대", type: "orion" },
+      { text: "무한한 가능성과 실험의 장", type: "andromeda" },
+      { text: "영원한 고향", type: "pleiades" },
+      { text: "비밀을 담은 서", type: "sirius" },
+      { text: "끝없는 여행길", type: "vega" }
+    ]
+  },
+  { text: "19. 내 영혼의 빛깔은…",
+    options: [
+      { text: "붉은색 – 열정과 힘", type: "orion" },
+      { text: "파란색 – 자유와 흐름", type: "andromeda" },
+      { text: "초록색 – 치유와 조화", type: "pleiades" },
+      { text: "보라색 – 지혜와 직관", type: "sirius" },
+      { text: "황금색 – 창조와 확장", type: "vega" }
+    ]
+  },
+  { text: "20. 나는 결국 어떤 존재로 기억되고 싶은가?",
+    options: [
+      { text: "개척의 전사", type: "orion" },
+      { text: "새로운 가능성을 연 창조자", type: "andromeda" },
+      { text: "사랑과 치유의 전달자", type: "pleiades" },
+      { text: "지혜와 깨달음을 나누는 현자", type: "sirius" },
+      { text: "어디에도 묶이지 않는 자유로운 영혼", type: "vega" }
+    ]
+  }
+];
 
-
-function showQuestion() {
-  let q = questions[currentQuestion];
-  let quizDiv = document.getElementById("quiz");
-  quizDiv.innerHTML = `<div class='question'><h3>${q.text}</h3></div>`;
   
-  q.options.forEach(opt => {
-    let btn = document.createElement("button");
-    btn.innerText = opt.text;
-    btn.onclick = function() {   // ← 화살표 함수 대신 일반 함수
-      selectAnswer(opt.type);
-    };
-    quizDiv.appendChild(btn);
-  });
-}
 
-
-  function selectAnswer(type) {
-    scores[type]++;
-    currentQuestion++;
-    if(currentQuestion < questions.length) {
-      showQuestion();
-    } else {
-      showResult();
-    }
-  }
-
-function showResult() {
-  let resultDiv = document.getElementById("result");
-  let topType = Object.keys(scores).reduce((a,b)=> scores[a]>scores[b]?a:b);
-
-  let descriptions = {
-    
-  orion: `
-    🔥 <b>오리온 스타시드</b><br>
-    강한 의지와 개척의 전사.<br><br>
-    당신은 시련을 두려워하지 않고 정면으로 맞서는 용기를 지녔습니다.<br>
-    새로운 길을 열고자 하는 불타는 개척 정신이 언제나 당신을 이끕니다.<br>
-    사람들은 당신의 강렬한 추진력과 리더십에 끌리며 따르게 됩니다.<br>
-    때로는 고독하지만, 그 고독 속에서 진정한 힘을 길러냅니다.<br>
-    당신의 여정은 세상에 강한 영감을 남깁니다.
-  `,
-  pleiades: `
-    🌊 <b>플레이아데스 스타시드</b><br>
-    사랑과 치유의 영혼.<br><br>
-    당신은 늘 따뜻한 에너지로 사람들을 감싸 안습니다.<br>
-    상처받은 이들을 편안히 감싸며 내면 깊은 치유를 선사합니다.<br>
-    자연과 교감할 때 가장 큰 평화와 안정감을 느낍니다.<br>
-    타인의 행복을 나의 행복처럼 여기는 공감력이 뛰어납니다.<br>
-    세상은 당신의 존재로 더욱 부드럽고 포근해집니다.
-  `,
-  sirius: `
-    🐬 <b>시리우스 스타시드</b><br>
-    지혜와 탐구의 영혼.<br><br>
-    당신은 진리와 지혜를 끝없이 추구하는 학자의 기질을 가졌습니다.<br>
-    고대의 지식과 영적인 깨달음에 특별히 끌립니다.<br>
-    깊은 성찰과 통찰력으로 사람들에게 빛을 전합니다.<br>
-    차분하지만 내면에는 불타는 지적 열정이 숨어 있습니다.<br>
-    세상의 비밀을 풀고자 하는 탐구심은 당신의 큰 사명입니다.
-  `,
-  andromeda: `
-    🌀 <b>안드로메다 스타시드</b><br>
-    자유와 창조의 여행자.<br><br>
-    당신은 어디에도 묶이지 않는 자유로운 영혼입니다.<br>
-    낯선 공간에서도 두려움보다 설렘을 먼저 느낍니다.<br>
-    규칙에 얽매이지 않고 스스로의 길을 창조해 나갑니다.<br>
-    변화와 모험을 통해 내면의 성장을 이끌어냅니다.<br>
-    세상은 당신 덕분에 언제나 새로운 가능성으로 채워집니다.
-  `,
-  vega: `
-    🎶 <b>베가 스타시드</b><br>
-    예술과 음악의 영혼.<br><br>
-    당신은 세상을 색과 소리로 느끼는 예술가적 기질을 가졌습니다.<br>
-    음악과 창작 속에서 진정한 자유를 발견합니다.<br>
-    때로는 즉흥적이지만 그 안에서 빛나는 영감을 전합니다.<br>
-    당신의 표현은 사람들의 마음을 움직이는 힘을 지닙니다.<br>
-    세상은 당신을 통해 더 아름다운 선율을 듣습니다.
-  `,
-  arcturus: `
-    ✨ <b>아크투루스 스타시드</b><br>
-    지혜로운 치유자.<br><br>
-    당신은 지식을 단순히 쌓는 데 그치지 않고 사람들을 치유합니다.<br>
-    문제의 근원을 파악하고 본질적인 해결책을 제시합니다.<br>
-    차분하고 안정적인 에너지로 사람들을 이끕니다.<br>
-    삶을 가르치는 스승 같은 역할을 자주 맡게 됩니다.<br>
-    세상은 당신의 지혜로 더욱 밝아집니다.
-  `,
-  lyra: `
-    🌌 <b>리라 스타시드</b><br>
-    고향 별을 그리워하는 영혼.<br><br>
-    당신은 설명하기 어려운 향수와 그리움을 품고 삽니다.<br>
-    낯선 곳에서도 왠지 모르게 익숙함을 느낍니다.<br>
-    따뜻한 교감 속에서 깊은 유대를 만들어 갑니다.<br>
-    영적인 공동체와 연결될 때 큰 힘을 발휘합니다.<br>
-    당신의 여정은 잃어버린 조화를 되찾는 길입니다.
-  `,
-  draco: `
-    🐉 <b>드라코 스타시드</b><br>
-    강한 수호자.<br><br>
-    당신은 언제나 약자를 지키고자 하는 본능을 지녔습니다.<br>
-    위기 상황에서 가장 먼저 앞에 서서 방패가 됩니다.<br>
-    단단하고 강인한 에너지가 사람들에게 신뢰를 줍니다.<br>
-    때로는 거칠게 보이지만, 내면에는 깊은 충성심이 있습니다.<br>
-    당신의 존재는 공동체의 버팀목이 됩니다.
-  `,
-  maldek: `
-    🌑 <b>말데크 스타시드</b><br>
-    재생과 부활의 영혼.<br><br>
-    당신은 파괴와 상실 속에서도 새로운 시작을 찾습니다.<br>
-    과거의 상처를 딛고 더 강하게 다시 일어섭니다.<br>
-    변화와 혼돈 속에서도 희망의 불씨를 지킵니다.<br>
-    모든 끝은 새로운 시작임을 본능적으로 압니다.<br>
-    당신의 길은 끊임없는 재생과 변화를 상징합니다.
-  `,
-  procyon: `
-    ☀️ <b>프록시온 스타시드</b><br>
-    밝고 경쾌한 영혼.<br><br>
-    당신은 언제나 긍정적인 에너지를 퍼뜨립니다.<br>
-    낯선 환경에서도 빠르게 적응하며 즐거움을 찾습니다.<br>
-    경쾌하고 활발한 성격으로 주변 분위기를 밝힙니다.<br>
-    사람들은 당신 곁에서 기분이 한결 가벼워집니다.<br>
-    세상은 당신의 빛으로 한층 더 따뜻해집니다.
-  `
-};
-
-resultDiv.innerHTML = `
-    <p><b>${userNickname}</b>님의 스타시드는...</p>
-    <p>${descriptions[topType]}</p>
-  `;
-
-document.getElementById("quiz").innerHTML = "";
-document.getElementById("share-buttons").style.display = "block";
-}
-
-  // 다시하기 기능
-  function restartQuiz() {
-    currentQuestion = 0;
-    for (let key in scores) scores[key] = 0;
-    userNickname = "";
-    document.getElementById("result").innerHTML = "";
-    document.getElementById("share-buttons").style.display = "none";
-    document.getElementById("intro").style.display = "block";
-  }
-
-  // 공유하기 기능
-  function shareResult() {
-    let resultText = document.getElementById("result").innerText;
-    if (navigator.share) {
-      navigator.share({
-        title: "🌌 내 스타시드 결과",
-        text: resultText,
-        url: window.location.href
-      }).catch(err => console.log("공유 취소:", err));
-    } else {
-      alert("공유하기 기능은 모바일 환경에서 지원됩니다.\n결과를 복사해 친구에게 전해보세요!");
-    }
-  }
 </script>
 </body>
 </html>
