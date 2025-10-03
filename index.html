@@ -5,39 +5,96 @@
   <title>Starseed Origin Test</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Starseed Origin Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* 배경 & 폰트 */
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Pretendard', 'Segoe UI', sans-serif;
       text-align: center;
       padding: 20px;
       margin: 0;
-      background: #0b0c2a;
       color: #fff;
+      background: linear-gradient(160deg, #0b0c2a, #1a1f4b, #000000);
+      background-size: 400% 400%;
+      animation: gradientBG 20s ease infinite;
     }
-    h1 { font-size: 1.5em; margin-bottom: 20px; }
-    .question { margin: 30px 0; font-size: 1.1em; line-height: 1.5; }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h1 {
+      font-size: 1.6em;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px #6bdcff, 0 0 20px #a875ff;
+    }
+
+    .question {
+      margin: 30px 0;
+      font-size: 1.1em;
+      line-height: 1.6;
+      padding: 15px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.08);
+      box-shadow: 0 0 10px rgba(255,255,255,0.2);
+    }
+
+    /* 버튼 스타일 */
     button {
       display: block;
       width: 90%;
-      max-width: 400px;
-      margin: 8px auto;
-      padding: 12px;
+      max-width: 420px;
+      margin: 10px auto;
+      padding: 14px;
       border: none;
-      border-radius: 8px;
-      background: #4a90e2;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #6b9dff, #9c6bff);
       color: white;
       font-size: 1em;
+      font-weight: bold;
       cursor: pointer;
-      word-break: keep-all;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
     }
-    button:hover { background: #357ab8; }
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(155, 100, 255, 0.8);
+    }
+
+    /* 결과 카드 */
     #result {
       margin-top: 40px;
-      font-size: 1.2em;
+      font-size: 1.3em;
       font-weight: bold;
-      padding: 20px;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.1);
+      padding: 25px;
+      border-radius: 15px;
+      background: rgba(255,255,255,0.12);
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+      animation: fadeIn 1s ease-in;
     }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <h1>🌌 Starseed Origin Test</h1>
+  <div id="quiz"></div>
+  <div id="result"></div>
+
+  <script>
+    /* (JS 부분은 이전 버전 그대로 사용) */
+  </script>
+</body>
+</html>
+
   </style>
 </head>
 <body>
