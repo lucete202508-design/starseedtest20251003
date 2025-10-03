@@ -372,17 +372,20 @@
     ];
 
 
-    function showQuestion() {
-    let q = questions[currentQuestion];
-    let quizDiv = document.getElementById("quiz");
-    quizDiv.innerHTML = `<div class='question'><h3>${q.text}</h3></div>`;
-    q.options.forEach(opt => {
-      let btn = document.createElement("button");
-      btn.innerText = opt.text;
-      btn.onclick = () => selectAnswer(opt.type);
-      quizDiv.appendChild(btn);
-    });
-  }
+function showQuestion() {
+  let q = questions[currentQuestion];
+  let quizDiv = document.getElementById("quiz");
+  quizDiv.innerHTML = `<div class='question'><h3>${q.text}</h3></div>`;
+  
+  q.options.forEach(opt => {
+    let btn = document.createElement("button");
+    btn.innerText = opt.text;
+    btn.onclick = function() {   // ← 화살표 함수 대신 일반 함수
+      selectAnswer(opt.type);
+    };
+    quizDiv.appendChild(btn);
+  });
+}
 
 
   function selectAnswer(type) {
