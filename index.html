@@ -18,49 +18,93 @@
       min-height: 100vh;
       text-align: center;
     }
+
     @keyframes gradientBG {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
+
     h1 {
       font-size: 1.8em;
       margin: 30px 0 20px 0;
       letter-spacing: 2px;
       text-shadow: 0 0 10px #6bdcff, 0 0 20px #a875ff;
     }
-    .container { width: 100%; max-width: 700px; padding: 20px; }
+
+    .container { 
+      width: 100%; 
+      max-width: 700px; 
+      padding: 20px; 
+    }
+
     .question {
-      margin: 30px 0; font-size: 1.1em; line-height: 1.6;
-      padding: 15px; border-radius: 12px;
+      margin: 30px 0; 
+      font-size: 1.1em; 
+      line-height: 1.6;
+      padding: 15px; 
+      border-radius: 12px;
       background: rgba(255,255,255,0.08);
       box-shadow: 0 0 10px rgba(255,255,255,0.2);
     }
+
     button {
-      display: block; margin: 10px auto;
-      width: 90%; max-width: 420px; padding: 14px;
-      border: none; border-radius: 10px;
+      display: block; 
+      margin: 10px auto;
+      width: 90%; 
+      max-width: 420px; 
+      padding: 14px;
+      border: none; 
+      border-radius: 10px;
       background: linear-gradient(135deg, #6b9dff, #9c6bff);
-      color: white; font-size: 1em; font-weight: bold;
-      cursor: pointer; transition: transform 0.2s ease, box-shadow 0.3s ease;
+      color: white; 
+      font-size: 1em; 
+      font-weight: bold;
+      cursor: pointer; 
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
     }
-    button:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(155,100,255,0.8); }
+
+    button:hover { 
+      transform: scale(1.05); 
+      box-shadow: 0 0 15px rgba(155,100,255,0.8); 
+    }
+
     button:focus { outline: none; }
+
     #result {
-      margin-top: 40px; font-size: 1.3em; font-weight: bold;
-      padding: 25px; border-radius: 15px;
-      background: rgba(255,255,255,0.12);
-      box-shadow: 0 0 20px rgba(255,255,255,0.3);
-      animation: fadeIn 1s ease-in;
+      margin-top: 40px;
+      font-size: 1.2em;
+      font-weight: bold;
+      padding: 30px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.08);
+      box-shadow: 0 0 25px rgba(155,100,255,0.6),
+                  0 0 50px rgba(100,200,255,0.4);
+      animation: fadeIn 1.2s ease-in;
+      line-height: 1.8;
+      max-width: 700px;
+      text-align: center;
+      backdrop-filter: blur(6px);
     }
+
+    #result b {
+      font-size: 1.4em;
+      color: #ffe680;
+      text-shadow: 0 0 10px #ffdd55, 0 0 20px #ffbb33;
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
   </style>
 </head>
 <body>
-  <h1>🌌 Starseed Origin Test</h1>
+  <h1>🌌 당신의 스타시드 타입은 ?</h1>
+  <p style="font-size:0.9em; color:#ccc; margin-top:-10px;">
+    Starseed Origin Test
+  </p>
   <div class="container">
     <div id="quiz"></div>
     <div id="result"></div>
@@ -284,19 +328,100 @@
     function showResult() {
       let resultDiv = document.getElementById("result");
       let topType = Object.keys(scores).reduce((a,b)=> scores[a]>scores[b]?a:b);
+
       let descriptions = {
-        orion: "🔥 오리온 스타시드: 강한 의지와 개척의 전사",
-        pleiades: "🌊 플레이아데스 스타시드: 사랑과 치유의 영혼",
-        sirius: "🐬 시리우스 스타시드: 지혜와 탐구의 영혼",
-        andromeda: "🌀 안드로메다 스타시드: 자유와 창조의 여행자",
-        vega: "🎶 베가 스타시드: 예술과 음악의 영혼",
-        arcturus: "✨ 아크투루스 스타시드: 지혜로운 치유자",
-        lyra: "🌌 리라 스타시드: 고향 별을 그리워하는 영혼",
-        draco: "🐉 드라코 스타시드: 강한 수호자",
-        maldek: "🌑 말데크 스타시드: 재생과 부활의 영혼",
-        procyon: "☀️ 프록시온 스타시드: 밝고 경쾌한 에너지를 퍼뜨리는 영혼"
-     
-      };
+  orion: `
+    🔥 <b>오리온 스타시드</b><br>
+    강한 의지와 개척의 전사.<br><br>
+    당신은 시련을 두려워하지 않고 정면으로 맞서는 용기를 지녔습니다.<br>
+    새로운 길을 열고자 하는 불타는 개척 정신이 언제나 당신을 이끕니다.<br>
+    사람들은 당신의 강렬한 추진력과 리더십에 끌리며 따르게 됩니다.<br>
+    때로는 고독하지만, 그 고독 속에서 진정한 힘을 길러냅니다.<br>
+    당신의 여정은 세상에 강한 영감을 남깁니다.
+  `,
+  pleiades: `
+    🌊 <b>플레이아데스 스타시드</b><br>
+    사랑과 치유의 영혼.<br><br>
+    당신은 늘 따뜻한 에너지로 사람들을 감싸 안습니다.<br>
+    상처받은 이들을 편안히 감싸며 내면 깊은 치유를 선사합니다.<br>
+    자연과 교감할 때 가장 큰 평화와 안정감을 느낍니다.<br>
+    타인의 행복을 나의 행복처럼 여기는 공감력이 뛰어납니다.<br>
+    세상은 당신의 존재로 더욱 부드럽고 포근해집니다.
+  `,
+  sirius: `
+    🐬 <b>시리우스 스타시드</b><br>
+    지혜와 탐구의 영혼.<br><br>
+    당신은 진리와 지혜를 끝없이 추구하는 학자의 기질을 가졌습니다.<br>
+    고대의 지식과 영적인 깨달음에 특별히 끌립니다.<br>
+    깊은 성찰과 통찰력으로 사람들에게 빛을 전합니다.<br>
+    차분하지만 내면에는 불타는 지적 열정이 숨어 있습니다.<br>
+    세상의 비밀을 풀고자 하는 탐구심은 당신의 큰 사명입니다.
+  `,
+  andromeda: `
+    🌀 <b>안드로메다 스타시드</b><br>
+    자유와 창조의 여행자.<br><br>
+    당신은 어디에도 묶이지 않는 자유로운 영혼입니다.<br>
+    낯선 공간에서도 두려움보다 설렘을 먼저 느낍니다.<br>
+    규칙에 얽매이지 않고 스스로의 길을 창조해 나갑니다.<br>
+    변화와 모험을 통해 내면의 성장을 이끌어냅니다.<br>
+    세상은 당신 덕분에 언제나 새로운 가능성으로 채워집니다.
+  `,
+  vega: `
+    🎶 <b>베가 스타시드</b><br>
+    예술과 음악의 영혼.<br><br>
+    당신은 세상을 색과 소리로 느끼는 예술가적 기질을 가졌습니다.<br>
+    음악과 창작 속에서 진정한 자유를 발견합니다.<br>
+    때로는 즉흥적이지만 그 안에서 빛나는 영감을 전합니다.<br>
+    당신의 표현은 사람들의 마음을 움직이는 힘을 지닙니다.<br>
+    세상은 당신을 통해 더 아름다운 선율을 듣습니다.
+  `,
+  arcturus: `
+    ✨ <b>아크투루스 스타시드</b><br>
+    지혜로운 치유자.<br><br>
+    당신은 지식을 단순히 쌓는 데 그치지 않고 사람들을 치유합니다.<br>
+    문제의 근원을 파악하고 본질적인 해결책을 제시합니다.<br>
+    차분하고 안정적인 에너지로 사람들을 이끕니다.<br>
+    삶을 가르치는 스승 같은 역할을 자주 맡게 됩니다.<br>
+    세상은 당신의 지혜로 더욱 밝아집니다.
+  `,
+  lyra: `
+    🌌 <b>리라 스타시드</b><br>
+    고향 별을 그리워하는 영혼.<br><br>
+    당신은 설명하기 어려운 향수와 그리움을 품고 삽니다.<br>
+    낯선 곳에서도 왠지 모르게 익숙함을 느낍니다.<br>
+    따뜻한 교감 속에서 깊은 유대를 만들어 갑니다.<br>
+    영적인 공동체와 연결될 때 큰 힘을 발휘합니다.<br>
+    당신의 여정은 잃어버린 조화를 되찾는 길입니다.
+  `,
+  draco: `
+    🐉 <b>드라코 스타시드</b><br>
+    강한 수호자.<br><br>
+    당신은 언제나 약자를 지키고자 하는 본능을 지녔습니다.<br>
+    위기 상황에서 가장 먼저 앞에 서서 방패가 됩니다.<br>
+    단단하고 강인한 에너지가 사람들에게 신뢰를 줍니다.<br>
+    때로는 거칠게 보이지만, 내면에는 깊은 충성심이 있습니다.<br>
+    당신의 존재는 공동체의 버팀목이 됩니다.
+  `,
+  maldek: `
+    🌑 <b>말데크 스타시드</b><br>
+    재생과 부활의 영혼.<br><br>
+    당신은 파괴와 상실 속에서도 새로운 시작을 찾습니다.<br>
+    과거의 상처를 딛고 더 강하게 다시 일어섭니다.<br>
+    변화와 혼돈 속에서도 희망의 불씨를 지킵니다.<br>
+    모든 끝은 새로운 시작임을 본능적으로 압니다.<br>
+    당신의 길은 끊임없는 재생과 변화를 상징합니다.
+  `,
+  procyon: `
+    ☀️ <b>프록시온 스타시드</b><br>
+    밝고 경쾌한 영혼.<br><br>
+    당신은 언제나 긍정적인 에너지를 퍼뜨립니다.<br>
+    낯선 환경에서도 빠르게 적응하며 즐거움을 찾습니다.<br>
+    경쾌하고 활발한 성격으로 주변 분위기를 밝힙니다.<br>
+    사람들은 당신 곁에서 기분이 한결 가벼워집니다.<br>
+    세상은 당신의 빛으로 한층 더 따뜻해집니다.
+  `
+};
+
       resultDiv.innerHTML = `<p>${descriptions[topType]}</p>`;
       document.getElementById("quiz").innerHTML = "";
     }
