@@ -3,18 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <title>Starseed Origin Test</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0
+    
 <style>
-  html, body {
+  body {
+    font-family: 'Pretendard', 'Segoe UI', sans-serif;
     margin: 0;
     padding: 0;
     width: 100%;
     min-height: 100%;
-    overflow-x: hidden;   /* 좌우 흔들림 방지 */
-    font-family: 'Pretendard', 'Segoe UI', sans-serif;
-  }
-
-  body {
+    overflow-x: hidden;
+    word-break: keep-all;        /* 한국어 줄바꿈 자연스럽게 */
+    line-height: 1.6;
+    -webkit-text-size-adjust: 100%; /* iOS에서 글자 확대 방지 */
     background: linear-gradient(160deg, #0b0c2a, #1a1f4b, #000000);
     background-size: 400% 400%;
     animation: gradientBG 20s ease infinite;
@@ -22,7 +23,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 100vh;
     text-align: center;
   }
 
@@ -37,6 +37,7 @@
     margin: 30px 0 5px 0;
     letter-spacing: 2px;
     text-shadow: 0 0 10px #6bdcff, 0 0 20px #a875ff;
+    word-break: keep-all;
   }
 
   .subtitle {
@@ -47,23 +48,24 @@
     text-shadow: 0 0 8px rgba(100,200,255,0.8),
                  0 0 15px rgba(155,100,255,0.6);
     font-style: italic;
+    word-break: keep-all;
   }
 
   .container { 
     width: 100%; 
     max-width: 700px; 
     padding: 20px; 
-    box-sizing: border-box;
   }
 
   .question, .intro {
     margin: 30px 0; 
     font-size: 1.1em; 
-    line-height: 1.6;
+    line-height: 1.7;
     padding: 15px; 
     border-radius: 12px;
     background: rgba(255,255,255,0.08);
     box-shadow: 0 0 10px rgba(255,255,255,0.2);
+    word-break: keep-all;
   }
 
   button, .action-btn {
@@ -80,6 +82,8 @@
     font-weight: bold;
     cursor: pointer; 
     transition: transform 0.2s ease, box-shadow 0.3s ease;
+    white-space: normal;   /* 버튼 안 텍스트도 줄바꿈 허용 */
+    line-height: 1.4;
   }
 
   button:hover, .action-btn:hover { 
@@ -103,6 +107,7 @@
     max-width: 700px;
     text-align: center;
     backdrop-filter: blur(6px);
+    word-break: keep-all;
   }
 
   #result b {
