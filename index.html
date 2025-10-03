@@ -2,10 +2,105 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>Starseed Test</title>
+  <title>Starseed Origin Test</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; text-align: center; padding: 40px; }
+    .question { margin: 30px 0; }
+    button { 
+      display: block; 
+      margin: 8px auto; 
+      padding: 10px 20px; 
+      border: none; 
+      border-radius: 8px;
+      background: #4a90e2; 
+      color: white; 
+      cursor: pointer;
+    }
+    button:hover { background: #357ab8; }
+    #result { margin-top: 40px; font-size: 1.2em; font-weight: bold; }
+  </style>
 </head>
 <body>
   <h1>🌌 Starseed Origin Test</h1>
-  <p>테스트 준비중...</p>
+  <div id="quiz"></div>
+  <div id="result"></div>
+
+  <script>
+    // 질문 리스트 (예시 2개만)
+    const questions = [
+      {
+        text: "별빛 가득한 밤하늘을 올려다볼 때 나는…",
+        options: [
+          { text: "끝없는 어둠 앞에서 두려움과 경외심을 느낀다", type: "orion" },
+          { text: "미지의 세계가 나를 부른다고 느낀다", type: "andromeda" },
+          { text: "설명할 수 없는 향수를 느끼며 고향 같다고 직감한다", type: "pleiades" },
+          { text: "별들의 움직임 속에서 지혜를 읽어낸다", type: "sirius" },
+          { text: "빛 속에서 무한한 가능성을 본다", type: "vega" }
+        ]
+      },
+      {
+        text: "낯선 땅에 처음 발을 디딘 순간 나는…",
+        options: [
+          { text: "살아남을 방법부터 찾는다", type: "draco" },
+          { text: "새로운 풍경을 탐험하며 설렌다", type: "procyon" },
+          { text: "낯설지 않고 친숙하게 느낀다", type: "lyra" },
+          { text: "이 공간의 의미와 역사를 분석한다", type: "arcturus" },
+          { text: "규칙 없이 자유롭게 나아간다", type: "maldek" }
+        ]
+      }
+    ];
+
+    let currentQuestion = 0;
+    let scores = {
+      orion:0, draco:0,
+      pleiades:0, lyra:0,
+      sirius:0, arcturus:0,
+      andromeda:0, procyon:0,
+      vega:0, maldek:0
+    };
+
+    function showQuestion() {
+      let q = questions[currentQuestion];
+      let quizDiv = document.getElementById("quiz");
+      quizDiv.innerHTML = `<div class='question'><h3>${q.text}</h3></div>`;
+      q.options.forEach(opt => {
+        let btn = document.createElement("button");
+        btn.innerText = opt.text;
+        btn.onclick = () => selectAnswer(opt.type);
+        quizDiv.appendChild(btn);
+      });
+    }
+
+    function selectAnswer(type) {
+      scores[type]++;
+      currentQuestion++;
+      if(currentQuestion < questions.length) {
+        showQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      let resultDiv = document.getElementById("result");
+      let topType = Object.keys(scores).reduce((a,b)=> scores[a]>scores[b]?a:b);
+      let descriptions = {
+        orion: "🔥 오리온 스타시드: 강한 의지와 개척의 전사",
+        pleiades: "🌊 플레이아데스 스타시드: 사랑과 치유의 영혼",
+        sirius: "🐬 시리우스 스타시드: 지혜와 탐구의 영혼",
+        andromeda: "🌀 안드로메다 스타시드: 자유와 창조의 여행자",
+        vega: "🎶 베가 스타시드: 예술과 음악의 영혼",
+        arcturus: "✨ 아크투루스 스타시드: 지혜로운 치유자",
+        lyra: "🌌 리라 스타시드: 고향 별을 그리워하는 영혼",
+        draco: "🐉 드라코 스타시드: 강한 수호자",
+        maldek: "🌑 말데크 스타시드: 상처를 치유하고 재생하는 영혼",
+        procyon: "☀️ 프록시온 스타시드: 빛과 즐거움을 전하는 영혼"
+      };
+      resultDiv.innerHTML = `<p>${descriptions[topType]}</p>`;
+      document.getElementById("quiz").innerHTML = "";
+    }
+
+    showQuestion();
+  </script>
 </body>
 </html>
