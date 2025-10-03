@@ -247,7 +247,15 @@ function showResult() {
       topType = key;
     }
   }
+  
+resultDiv.innerHTML = `
+  <b>${userNickname}</b>님은<br>
+  <b>${topType.toUpperCase()}</b> 타입의 스타시드입니다!<br><br>
+  ${typeDescriptions[topType]}<br><br>
+  <span style="font-size: 0.9em; color: #ddd;">결과는 스크린샷을 찍어 공유해 주세요 ^^</span>
+`;
 
+  
 const typeDescriptions = {
   orion: `🟥 <b>오리온 (Orion)</b><br>
           🔥 강인한 추진력과 전사적 에너지를 지닌 리더입니다.<br>
