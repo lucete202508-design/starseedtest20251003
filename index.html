@@ -153,12 +153,12 @@
     <!-- 결과 -->
     <div id="result"></div>
 
- <!-- 다시하기 / 내결과저장 / 공유하기 -->
+<!-- 버튼 영역 (HTML 안에서) -->
 <div id="share-buttons" style="margin-top:20px; display:none;">
   <button class="action-btn" onclick="restartQuiz()">🔁 다시하기</button>
-  <button class="action-btn" onclick="saveResult()">💾 내 결과 저장</button>
-  <button class="action-btn" onclick="shareResult()">🌌 공유하기</button>
+  <button class="action-btn" onclick="shareResult()">🌌 테스트 링크 공유하기</button>
 </div>
+
 
  
 </body>
@@ -248,27 +248,107 @@ function showResult() {
     }
   }
 
-  resultDiv.innerHTML = `<b>${userNickname}</b>님은<br><b>${topType.toUpperCase()}</b> 타입의 스타시드입니다!`;
+const typeDescriptions = {
+  orion: `🟥 <b>오리온 (Orion)</b><br>
+          🔥 강인한 추진력과 전사적 에너지를 지닌 리더입니다.<br>
+          도전을 두려워하지 않고 정면으로 부딪힙니다.<br>
+          불의 상징처럼 열정과 힘으로 앞장서며<br>
+          새로운 길을 개척하려는 욕구가 강합니다.<br>
+          카리스마와 리더십이 탁월한 타입입니다.`,
+
+  andromeda: `🟦 <b>안드로메다 (Andromeda)</b><br>
+              🔮 자유와 창조의 에너지를 지닌 혁신가입니다.<br>
+              관습을 거부하고, 늘 새로운 세상을 꿈꿉니다.<br>
+              공기처럼 흐르며 변화와 실험을 즐기고<br>
+              미래지향적인 사고로 남들과는 다른 길을 갑니다.<br>
+              타고난 개척자이자 이상주의자입니다.`,
+
+  pleiades: `🟪 <b>플레이아데스 (Pleiades)</b><br>
+             💗 깊은 공감력과 사랑을 품은 치유자입니다.<br>
+             주변 사람들에게 따뜻함과 위로를 전하고<br>
+             조화와 평화를 중시하며 감성적입니다.<br>
+             자연, 동물, 예술과의 교감에 끌립니다.<br>
+             존재 자체가 힐링인 사람입니다.`,
+
+  sirius: `🟫 <b>시리우스 (Sirius)</b><br>
+           📚 지혜와 통찰을 갖춘 고대의 현자입니다.<br>
+           지식에 대한 갈망이 강하고 분석력이 뛰어납니다.<br>
+           고요하고 명상적인 에너지를 지녔으며<br>
+           이성과 논리를 바탕으로 깊은 이해를 추구합니다.<br>
+           오래된 영혼처럼 신비롭고 정제된 타입입니다.`,
+
+  vega: `🟨 <b>베가 (Vega)</b><br>
+         🕊️ 자유로운 영혼의 예술가입니다.<br>
+         얽매임을 싫어하고 즉흥성과 창조성이 풍부합니다.<br>
+         여행, 변화, 음악 등 유동적인 삶을 사랑합니다.<br>
+         빛처럼 영감을 퍼뜨리는 존재로<br>
+         어디에도 속하지 않는 유니크한 타입입니다.`,
+
+  draco: `⬛ <b>드라코 (Draco)</b><br>
+          🐉 생존력 강한 전사 타입의 영혼입니다.<br>
+          현실 감각이 뛰어나고 구조적 판단이 탁월합니다.<br>
+          강인하고 단단한 에너지로 보호자 역할을 합니다.<br>
+          강한 외면 아래 깊은 내면을 감추고 있으며<br>
+          전략과 방어 본능이 강합니다.`,
+
+  arcturus: `🟥 <b>아크투루스 (Arcturus)</b><br>
+             🔎 고대 기술과 구조에 끌리는 분석가입니다.<br>
+             현실 세계의 시스템과 질서를 이해하고<br>
+             진실을 추적하려는 열망이 강합니다.<br>
+             깨어 있는 지성, 높은 관찰력을 지녔으며<br>
+             조직적 사고를 즐기는 타입입니다.`,
+
+  lyra: `🟪 <b>라이라 (Lyra)</b><br>
+         🎶 음악과 예술, 감성의 중심에 있는 존재입니다.<br>
+         주변을 부드럽게 녹이는 따뜻한 에너지를 지녔고<br>
+         사람들에게 편안함을 주는 능력이 탁월합니다.<br>
+         감정 표현이 풍부하고 낭만적인 성향이 강하며<br>
+         공감과 아름다움을 삶의 기준으로 삼습니다.`,
+
+  procyon: `🟦 <b>프로키온 (Procyon)</b><br>
+            🌟 밝고 천진난만한 에너지를 지닌 탐험가입니다.<br>
+            낯선 환경에서도 금방 적응하며<br>
+            즐겁고 유쾌한 분위기를 만듭니다.<br>
+            모험심이 강하고 호기심이 많으며<br>
+            새로운 것에 대한 설렘이 가득한 타입입니다.`,
+
+  maldek: `⬜ <b>말덱 (Maldek)</b><br>
+           🌌 규칙을 거부하고 자유롭게 떠도는 방랑자입니다.<br>
+           틀 안에 갇히기보다 자신만의 리듬을 따릅니다.<br>
+           체계보다 본능과 감각을 더 신뢰하며<br>
+           직관적이고 강렬한 존재감을 지녔습니다.<br>
+           불완전함마저도 자신만의 세계로 끌어당깁니다.`
+};
+
+
+
+
+  
+  resultDiv.innerHTML = `
+    <b>${userNickname}</b>님은<br>
+    <b>${topType.toUpperCase()}</b> 타입의 스타시드입니다!<br><br>
+    <span style="font-size: 0.9em; color: #ddd;">결과는 스크린샷을 찍어 공유해 주세요 ^^</span>
+  `;
+
   shareDiv.style.display = "block";
 }
 
-// 버튼 기능들
+// 다시하기 버튼 기능
 function restartQuiz() {
   location.reload();
 }
 
-function saveResult() {
-  html2canvas(document.getElementById("result")).then(canvas => {
-    const link = document.createElement("a");
-    link.download = "starseed_result.png";
-    link.href = canvas.toDataURL();
-    link.click();
+// 테스트 링크 공유하기
+function shareResult() {
+  const testLink = window.location.href;
+  navigator.clipboard.writeText(testLink).then(() => {
+    alert("테스트 링크가 복사되었습니다!\n친구에게 붙여넣기 해서 공유해보세요 😊");
+  }).catch(() => {
+    alert("복사에 실패했어요. 직접 주소창 링크를 복사해주세요!");
   });
 }
 
-function shareResult() {
-  alert("공유 기능은 준비 중입니다.\n스크린샷을 찍어 SNS에 올려주세요 😊");
-}
+
 
 const questions = [
   { text: "1. 별빛 가득한 밤하늘을 올려다볼 때 나는…",
