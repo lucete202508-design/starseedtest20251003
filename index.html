@@ -5,75 +5,50 @@
   <title>Starseed Origin Test</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>Starseed Origin Test</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    /* 배경 & 폰트 */
     body {
       font-family: 'Pretendard', 'Segoe UI', sans-serif;
-      text-align: center;
-      padding: 20px;
-      margin: 0;
-      color: #fff;
+      margin: 0; padding: 0;
       background: linear-gradient(160deg, #0b0c2a, #1a1f4b, #000000);
       background-size: 400% 400%;
       animation: gradientBG 20s ease infinite;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
     }
     @keyframes gradientBG {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
     h1 {
-      font-size: 1.6em;
-      margin-bottom: 20px;
+      font-size: 1.8em;
+      margin: 30px 0 20px 0;
       letter-spacing: 2px;
       text-shadow: 0 0 10px #6bdcff, 0 0 20px #a875ff;
     }
-
+    .container { width: 100%; max-width: 700px; padding: 20px; }
     .question {
-      margin: 30px 0;
-      font-size: 1.1em;
-      line-height: 1.6;
-      padding: 15px;
-      border-radius: 12px;
+      margin: 30px 0; font-size: 1.1em; line-height: 1.6;
+      padding: 15px; border-radius: 12px;
       background: rgba(255,255,255,0.08);
       box-shadow: 0 0 10px rgba(255,255,255,0.2);
     }
-
-    /* 버튼 스타일 */
     button {
-      display: block;
-      width: 90%;
-      max-width: 420px;
-      margin: 10px auto;
-      padding: 14px;
-      border: none;
-      border-radius: 10px;
+      display: block; margin: 10px auto;
+      width: 90%; max-width: 420px; padding: 14px;
+      border: none; border-radius: 10px;
       background: linear-gradient(135deg, #6b9dff, #9c6bff);
-      color: white;
-      font-size: 1em;
-      font-weight: bold;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      color: white; font-size: 1em; font-weight: bold;
+      cursor: pointer; transition: transform 0.2s ease, box-shadow 0.3s ease;
     }
-    button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(155, 100, 255, 0.8);
-    }
-
-    /* 결과 카드 */
+    button:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(155,100,255,0.8); }
+    button:focus { outline: none; }
     #result {
-      margin-top: 40px;
-      font-size: 1.3em;
-      font-weight: bold;
-      padding: 25px;
-      border-radius: 15px;
+      margin-top: 40px; font-size: 1.3em; font-weight: bold;
+      padding: 25px; border-radius: 15px;
       background: rgba(255,255,255,0.12);
       box-shadow: 0 0 20px rgba(255,255,255,0.3);
       animation: fadeIn 1s ease-in;
@@ -86,21 +61,10 @@
 </head>
 <body>
   <h1>🌌 Starseed Origin Test</h1>
-  <div id="quiz"></div>
-  <div id="result"></div>
-
-  <script>
-    /* (JS 부분은 이전 버전 그대로 사용) */
-  </script>
-</body>
-</html>
-
-  </style>
-</head>
-<body>
-  <h1>🌌 Starseed Origin Test</h1>
-  <div id="quiz"></div>
-  <div id="result"></div>
+  <div class="container">
+    <div id="quiz"></div>
+    <div id="result"></div>
+  </div>
 
   <script>
     const questions = [
@@ -331,6 +295,7 @@
         draco: "🐉 드라코 스타시드: 강한 수호자",
         maldek: "🌑 말데크 스타시드: 재생과 부활의 영혼",
         procyon: "☀️ 프록시온 스타시드: 밝고 경쾌한 에너지를 퍼뜨리는 영혼"
+     
       };
       resultDiv.innerHTML = `<p>${descriptions[topType]}</p>`;
       document.getElementById("quiz").innerHTML = "";
