@@ -400,6 +400,7 @@ function showResult() {
   let topType = Object.keys(scores).reduce((a,b)=> scores[a]>scores[b]?a:b);
 
   let descriptions = {
+    
   orion: `
     🔥 <b>오리온 스타시드</b><br>
     강한 의지와 개척의 전사.<br><br>
@@ -409,11 +410,6 @@ function showResult() {
     때로는 고독하지만, 그 고독 속에서 진정한 힘을 길러냅니다.<br>
     당신의 여정은 세상에 강한 영감을 남깁니다.
   `,
-
-          resultDiv.innerHTML = `
-    <p><b>${userNickname}</b>님의 스타시드는...</p>
-    <p>${descriptions[topType]}</p>
-        
   pleiades: `
     🌊 <b>플레이아데스 스타시드</b><br>
     사랑과 치유의 영혼.<br><br>
