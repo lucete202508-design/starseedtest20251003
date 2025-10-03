@@ -48,7 +48,7 @@
       padding: 20px; 
     }
 
-    .question {
+    .question, .intro {
       margin: 30px 0; 
       font-size: 1.1em; 
       line-height: 1.6;
@@ -58,7 +58,7 @@
       box-shadow: 0 0 10px rgba(255,255,255,0.2);
     }
 
-    button {
+    button, .action-btn {
       display: block; 
       margin: 10px auto;
       width: 90%; 
@@ -74,7 +74,7 @@
       transition: transform 0.2s ease, box-shadow 0.3s ease;
     }
 
-    button:hover { 
+    button:hover, .action-btn:hover { 
       transform: scale(1.05); 
       box-shadow: 0 0 15px rgba(155,100,255,0.8); 
     }
@@ -109,18 +109,83 @@
     }
   </style>
 </head>
+
+
+
+
+  
 <body>
   <h1>🌌 당신의 스타시드 타입은 ?</h1>
   <p class="subtitle">✨ Starseed Origin Test ✨</p>
+
   <div class="container">
-    <div id="quiz"></div>
+    <!-- 시작화면 -->
+    <div id="intro" class="intro">
+      <p>별의 기원을 찾는 여정을 시작해볼까요?</p>
+      <button onclick="startQuiz()">🌌 스타시드 찾기 시작하기</button>
+    </div>
+
+    <!-- 닉네임 입력 화면 -->
+    <div id="nickname-input" class="intro" style="display:none;">
+      <p>당신의 닉네임을 입력해주세요</p>
+      <input type="text" id="nickname" placeholder="닉네임" 
+             style="padding:10px; border-radius:8px; border:none; width:80%; max-width:300px; text-align:center;">
+      <button onclick="beginQuestions()">시작하기</button>
+    </div>
+
+    <!-- 퀴즈 질문 -->
+    <div id="quiz" style="display:none;"></div>
+
+    <!-- 결과 -->
     <div id="result"></div>
+
+    <!-- 다시하기 / 공유하기 -->
+    <div id="share-buttons" style="margin-top:20px; display:none;">
+      <button class="action-btn" onclick="restartQuiz()">🔁 다시하기</button>
+      <button class="action-btn" onclick="shareResult()">🌌 내 스타시드 공유하기</button>
+    </div>
   </div>
 </body>
 
 
 
-  <script>
+
+
+<script>
+  let currentQuestion = 0;
+  let scores = {
+    orion:0, draco:0,
+    pleiades:0, lyra:0,
+    sirius:0, arcturus:0,
+    andromeda:0, procyon:0,
+    vega:0, maldek:0
+  };
+  let userNickname = ""; // 닉네임 저장
+
+  // 시작하기 → 닉네임 입력 화면
+  function startQuiz() {
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("nickname-input").style.display = "block";
+  }
+
+// 닉네임 입력 후 문제 시작
+function beginQuestions() {
+  let nickname = document.getElementById("nickname").value.trim();
+  if (!nickname) {
+    alert("닉네임을 입력해주세요!");
+    return;
+  }
+
+  document.getElementById("nickname-input").style.display = "none";
+  document.getElementById("quiz").style.display = "block";
+
+  currentQuestion = 0;
+  for (let key in scores) scores[key] = 0;
+
+  showQuestion();  
+}
+
+    
     const questions = [
       { text: "1. 별빛 가득한 밤하늘을 올려다볼 때 나는…",
         options: [
@@ -304,42 +369,35 @@
       }
     ];
 
-    let currentQuestion = 0;
-    let scores = {
-      orion:0, draco:0,
-      pleiades:0, lyra:0,
-      sirius:0, arcturus:0,
-      andromeda:0, procyon:0,
-      vega:0, maldek:0
-    };
 
     function showQuestion() {
-      let q = questions[currentQuestion];
-      let quizDiv = document.getElementById("quiz");
-      quizDiv.innerHTML = `<div class='question'><h3>${q.text}</h3></div>`;
-      q.options.forEach(opt => {
-        let btn = document.createElement("button");
-        btn.innerText = opt.text;
-        btn.onclick = () => selectAnswer(opt.type);
-        quizDiv.appendChild(btn);
-      });
+    let q = questions[currentQuestion];
+    let quizDiv = document.getElementById("quiz");
+    quizDiv.innerHTML = `<div class='question'><h3>${q.text}</h3></div>`;
+    q.options.forEach(opt => {
+      let btn = document.createElement("button");
+      btn.innerText = opt.text;
+      btn.onclick = () => selectAnswer(opt.type);
+      quizDiv.appendChild(btn);
+    });
+  }
+
+
+  function selectAnswer(type) {
+    scores[type]++;
+    currentQuestion++;
+    if(currentQuestion < questions.length) {
+      showQuestion();
+    } else {
+      showResult();
     }
+  }
 
-    function selectAnswer(type) {
-      scores[type]++;
-      currentQuestion++;
-      if(currentQuestion < questions.length) {
-        showQuestion();
-      } else {
-        showResult();
-      }
-    }
+function showResult() {
+  let resultDiv = document.getElementById("result");
+  let topType = Object.keys(scores).reduce((a,b)=> scores[a]>scores[b]?a:b);
 
-    function showResult() {
-      let resultDiv = document.getElementById("result");
-      let topType = Object.keys(scores).reduce((a,b)=> scores[a]>scores[b]?a:b);
-
-      let descriptions = {
+  let descriptions = {
   orion: `
     🔥 <b>오리온 스타시드</b><br>
     강한 의지와 개척의 전사.<br><br>
@@ -349,6 +407,11 @@
     때로는 고독하지만, 그 고독 속에서 진정한 힘을 길러냅니다.<br>
     당신의 여정은 세상에 강한 영감을 남깁니다.
   `,
+
+          resultDiv.innerHTML = `
+    <p><b>${userNickname}</b>님의 스타시드는...</p>
+    <p>${descriptions[topType]}</p>
+        
   pleiades: `
     🌊 <b>플레이아데스 스타시드</b><br>
     사랑과 치유의 영혼.<br><br>
@@ -432,11 +495,39 @@
   `
 };
 
-      resultDiv.innerHTML = `<p>${descriptions[topType]}</p>`;
-      document.getElementById("quiz").innerHTML = "";
-    }
+resultDiv.innerHTML = `
+    <p><b>${userNickname}</b>님의 스타시드는...</p>
+    <p>${descriptions[topType]}</p>
+  `;
 
-    showQuestion();
-  </script>
+document.getElementById("quiz").innerHTML = "";
+document.getElementById("share-buttons").style.display = "block";
+}
+
+  // 다시하기 기능
+  function restartQuiz() {
+    currentQuestion = 0;
+    for (let key in scores) scores[key] = 0;
+    userNickname = "";
+    document.getElementById("result").innerHTML = "";
+    document.getElementById("share-buttons").style.display = "none";
+    document.getElementById("intro").style.display = "block";
+  }
+
+  // 공유하기 기능
+  function shareResult() {
+    let resultText = document.getElementById("result").innerText;
+    if (navigator.share) {
+      navigator.share({
+        title: "🌌 내 스타시드 결과",
+        text: resultText,
+        url: window.location.href
+      }).catch(err => console.log("공유 취소:", err));
+    } else {
+      alert("공유하기 기능은 모바일 환경에서 지원됩니다.\n결과를 복사해 친구에게 전해보세요!");
+    }
+  }
+</script>
 </body>
 </html>
+
