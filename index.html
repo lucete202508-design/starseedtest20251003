@@ -327,7 +327,6 @@ const typeDescriptions = {
            불완전함마저도 <br>자신만의 세계로 끌어당깁니다.`
 };
 
-// 결과 보여주기 함수
 function showResult() {
   const resultDiv = document.getElementById("result");
   const shareDiv = document.getElementById("share-buttons");
@@ -347,12 +346,51 @@ function showResult() {
     <b>${userNickname}</b>님의 스타시드는<br>
     <b>${topType.toUpperCase()}</b>입니다!<br><br>
     ${typeDescriptions[topType]}<br><br>
-    <span style="font-size: 0.9em; color: #ddd;">결과는 스크린샷을 찍어<br> 아래 링크와 함께 공유해 주세요 - 루세테</span>
+
+    <button class="action-btn" onclick="showAllCards()">🌠 모든 스타시드 보기</button>
+    <span style="font-size: 0.9em; color: #ddd;"><br>결과는 스크린샷을 찍어<br> 아래 링크와 함께 공유해 주세요 - 루세테</span>
   `;
 
   shareDiv.style.display = "block";
 }
 
+const typeColors = {
+  orion: "#ff5555",
+  andromeda: "#5fa8ff",
+  pleiades: "#d68cff",
+  sirius: "#a07bff",
+  vega: "#ffe680",
+  draco: "#555",
+  arcturus: "#ff8c42",
+  lyra: "#c48fff",
+  procyon: "#8cf0ff",
+  maldek: "#ccc"
+};
+
+function showAllCards() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  const resultDiv = document.getElementById("result");
+  resultDiv.innerHTML = `
+    <h2 style="margin-top:20px;">🌌 모든 스타시드 카드 보기</h2>
+    ${Object.entries(typeDescriptions).map(([key, desc]) => `
+      <div style="
+        margin: 25px auto;
+        padding: 20px;
+        border-radius: 15px;
+        background: rgba(255,255,255,0.08);
+        border: 2px solid ${typeColors[key]};
+        box-shadow: 0 0 20px ${typeColors[key]}66;
+        max-width: 700px;
+        line-height: 1.7;">
+        ${desc}
+      </div>
+    `).join('')}
+    <button class="action-btn" onclick="showResult(); window.scrollTo({ top: 0, behavior: 'smooth' });">
+      🔙 내 결과로 돌아가기
+    </button>
+    <button class="action-btn" onclick="restartQuiz()">🔁 다시하기</button>
+  `;
+}
 
 
 
