@@ -24,9 +24,9 @@
     width: 100%;
     min-height: 100%;
     overflow-x: hidden;
-    word-break: keep-all;        /* 한국어 줄바꿈 자연스럽게 */
+    word-break: keep-all;        
     line-height: 1.6;
-    -webkit-text-size-adjust: 100%; /* iOS에서 글자 확대 방지 */
+    -webkit-text-size-adjust: 100%; 
     background: linear-gradient(160deg, #0b0c2a, #1a1f4b, #000000);
     background-size: 400% 400%;
     animation: gradientBG 20s ease infinite;
@@ -93,7 +93,7 @@
     font-weight: bold;
     cursor: pointer; 
     transition: transform 0.2s ease, box-shadow 0.3s ease;
-    white-space: normal;   /* 버튼 안 텍스트도 줄바꿈 허용 */
+    white-space: normal;   
     line-height: 1.4;
   }
 
@@ -150,7 +150,7 @@
       <button onclick="startQuiz()">🌌 스타시드 찾기 시작하기</button>
     </div>
 
-    <!-- 닉네임 입력 화면 -->
+   
     <div id="nickname-input" class="intro" style="display:none;">
       <p>당신의 닉네임을 입력해주세요</p>
       <input type="text" id="nickname" placeholder="닉네임" 
@@ -158,18 +158,18 @@
       <button onclick="beginQuestions()">시작하기</button>
     </div>
 
-    <!-- 퀴즈 질문 -->
+ 
     <div id="quiz" style="display:none;"></div>
 
-    <!-- 결과 -->
+    
     <div id="result"></div>
 
-<!-- 버튼 영역 (HTML 안에서) -->
+
 <div id="share-buttons" style="margin-top:20px; display:none;">
   <button class="action-btn" onclick="restartQuiz()">🔁 다시하기</button>
   <button class="action-btn" onclick="shareResult()">🌌 테스트 링크복사</button>
 
-  <!-- 여기에 추가 -->
+
   <div style="margin-top: 10px;">
     <a href="https://naver.me/5owZXdHs" target="_blank" style="color: #fff; text-decoration: underline; font-size: 0.9em;">
       🌙 루세테의 원석상점 네이버 카페
@@ -198,15 +198,15 @@
     andromeda:0, procyon:0,
     vega:0, maldek:0
   };
-  let userNickname = ""; // 닉네임 저장
+  let userNickname = ""; 
 
-  // 시작하기 → 닉네임 입력 화면
+  
   function startQuiz() {
     document.getElementById("intro").style.display = "none";
     document.getElementById("nickname-input").style.display = "block";
   }
 
-  // 닉네임 입력 후 문제 시작
+  
   function beginQuestions() {
     let nickname = document.getElementById("nickname").value.trim();
     if (!nickname) {
@@ -214,7 +214,7 @@
       return;
     }
 
-    userNickname = nickname; // ⭐ 닉네임 저장
+    userNickname = nickname; 
 
     document.getElementById("nickname-input").style.display = "none";
     document.getElementById("quiz").style.display = "block";
@@ -225,7 +225,7 @@
     showQuestion();  
   }
 
-  // 질문 화면 보여주기
+  
 function showQuestion() {
   const quizDiv = document.getElementById("quiz");
   quizDiv.innerHTML = "";
@@ -254,7 +254,7 @@ function showQuestion() {
   quizDiv.appendChild(questionElem);
 }
 
-// 타입별 설명을 함수 바깥에 미리 선언
+
 const typeDescriptions = {
   orion: `🟥 <b>오리온 (Orion)</b><br>
           🔥 당신은 강인한 추진력과<br> 전사적 에너지를 지닌 리더입니다.<br>
@@ -335,7 +335,7 @@ function showResult() {
   let topType = null;
   let maxScore = -1;
 
-  // 최고 점수 타입 계산
+  
   for (let key in scores) {
     if (scores[key] > maxScore) {
       maxScore = scores[key];
@@ -343,7 +343,7 @@ function showResult() {
     }
   }
 
-  // 결과 내용 출력
+  
   resultDiv.style.display = "block";
   resultDiv.innerHTML = `
     <b>${userNickname}</b>님의 스타시드는<br>
@@ -356,14 +356,14 @@ function showResult() {
     </span>
   `;
 
-  // 버튼 동작 명시적으로 연결 (모바일 대응)
+  
   document.getElementById("allCardsBtn").addEventListener("click", showAllCards);
 
-  // 공유 버튼 영역 표시
+  
   shareDiv.style.display = "block";
 }
 
-// 각 타입별 색상 정의
+
 const typeColors = {
   orion: "#ff5555",
   andromeda: "#5fa8ff",
@@ -407,12 +407,12 @@ function showAllCards() {
 
 
   
-// 다시하기 버튼 기능
+
 function restartQuiz() {
   location.reload();
 }
 
-// 테스트 링크 공유하기
+
 function shareResult() {
   const testLink = window.location.href;
   navigator.clipboard.writeText(testLink).then(() => {
